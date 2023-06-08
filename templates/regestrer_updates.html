@@ -1,0 +1,449 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Registration Contacts</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'fonts/contact_fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/contact_fonts/flaticon/font/flaticon.css' %}">
+
+    <link rel="stylesheet" href="{% static 'bootstrap-4/css/contact_css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4/css/contact_css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4/css/contact_css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4/css/contact_css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4/css/contact_css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4/css/contact_css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4/css/contact_css/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4/css/contact_css/rangeslider.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4/css/contact_css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/regstyle.css' %}">
+
+
+</head>
+<body>
+{% csrf_token %}
+
+<div class="site-wrap">
+
+    <div class="site-mobile-menu">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <header class="site-navbar container py-0 bg-white" role="banner">
+
+        <!-- <div class="container"> -->
+        <div class="row align-items-center">
+
+            <div class="col-6 col-xl-2">
+                <h1 class="mb-0 site-logo"><a class="text-black mb-0">AAA<span class="text-primary">S</span> </a></h1>
+            </div>
+            <div class="col-12 col-md-10 d-none d-xl-block">
+                <nav class="site-navigation position-relative text-right" role="navigation">
+
+                    <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
+
+                        <li>
+                            <img src="{% static 'img/avatar.png' %}" class="avatar"
+                                 style="border-radius: 50%;margin: auto;width: 25%;"></li>
+
+                        <li>
+                            <a href="{% url 'newuser' %}">Add New Student</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'registrerMain' %}">Main</a>
+                        </li>
+
+                        <li class="ml-xl-3 login active"><a href="{% url 'logout' %}"><span
+                                class="border-left pl-xl-4"></span>Sign Out</a></li>
+
+
+                    </ul>
+                </nav>
+            </div>
+
+
+            <div class="d-inline-block d-xl-none ml-auto py-3 col-6 text-right" style="position: relative; top: 3px;">
+                <a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a>
+            </div>
+
+        </div>
+        <!-- </div> -->
+
+    </header>
+
+
+    <div class="site-blocks-cover inner-page-cover overlay"
+         style="background-image: url({% static 'img/RegUpdates.jpg' %})"
+         ;
+         data-aos="fade" data-stellar-background-ratio="0.5">
+        <div class="container">
+            <div class="row align-items-center justify-content-center text-center">
+
+                <div class="col-md-10" data-aos="fade-up" data-aos-delay="400">
+
+
+                    <div class="row justify-content-center mt-5">
+                        <div class="col-md-8 text-center">
+                            <h1>Registrer Section </h1>
+                            <p class="mb-0">Update Student Academic Data</p>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="site-section bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 mb-5" data-aos="fade">
+
+                    <form action="#" class="p-5 bg-white">
+
+
+                        <div class="row form-group">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label class="text-black" for="fname">Student ID</label>
+                                <input type="text" id="fname" class="form-control"
+                                       onkeyup="EnableDisable(this)"/>
+
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+
+                            <div class="col-md-12">
+
+                                {#% url 'getid'  %#}
+                                <button id="generate" class="btn btn-primary px-4 py-2 text-white" style="margin: 10px;"
+                                        type="button" value="generateFromID" disabled="disabled"
+                                        onclick="getStudentDataByID();">Get Courses
+                                </button>
+
+                                <div id="container" class="generate">
+                                    <label class="text-black" for="coursesList">Courses List</label>
+
+                                </div>
+
+                                <hr/>
+
+                                <div id="myDynamicTable">
+                                    <button id="create" type="button" value="Click here"
+                                            class="btn btn-primary px-4 py-2 text-white"
+                                            onclick="addRowFromdata();">View Table
+                                    </button>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+
+                        {#            <button id="generatTable" class="btn btn-primary px-4 py-2 text-white" style="margin: 10px;"#}
+                        {#                       type="button" value="Generate Table" onclick="Javascript:addTable()">Genarate Table</button>#}
+                    </form>
+                    <form action="#" class="p-5 bg-white" style="margin-top: 20px">
+
+                        <div class="row form-group">
+                            <div class="col-md-12">
+
+                                <div id="myform">
+                                    <b>Simply Enter New Values for Course and GPA ...</b>
+                                    <table>
+                                        <tr>
+                                            <td>Course</td>
+                                            <td><input type="text" id="course"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>GPA</td>
+                                            <td><input type="text" id="gpa"></td>
+
+                                        </tr>
+
+
+                                    </table>
+                                    <br>
+
+                                    <button id="" type="button" style="margin: 10px;"
+                                            class="btn btn-primary px-4 py-2 text-white"
+                                            onclick="addRow();">Add
+                                    </button>
+                                </div>
+
+                                <div id="mydata">
+                                    <b>Current data in the system ...</b>
+                                    <br>
+
+                                    <table id="myTableData" border="1" cellpadding="2" style="
+                                    border-collapse: separate;border-spacing: 0;color: #4a4a4d;">
+
+                                        <tr>
+                                            <thead>
+                                            <th style="padding: 10px 15px;vertical-align: middle;">Remove</th>
+                                            <th style="padding: 10px 15px;vertical-align: middle;">GPA</th>
+                                            <th style="padding: 10px 15px;vertical-align: middle;">Course</th>
+                                            </thead>
+                                        </tr>
+
+                                    </table>
+                                    &nbsp;
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                        <button onclick=submitCourses(); type="button" style="margin: 10px;"
+                                href="{#% url 'registrer' %#}"
+                                class="btn btn-primary px-4 py-2 text-white">Submit
+                        </button>
+
+                    </form>
+                </div>
+                <div class="col-md-5" data-aos="fade" data-aos-delay="100">
+
+                    <div class="p-4 mb-3 bg-white">
+                        <p class="mb-0 font-weight-bold">Name</p>
+                        <p class="mb-4"> Student Name </p>
+
+                        <p class="mb-0 font-weight-bold"> Total GPA</p>
+                        <p class="mb-4"> GPA </p>
+
+                        <p class="mb-0 font-weight-bold">Grade</p>
+                        <p class="mb-0">Student Grade</p>
+
+                    </div>
+
+                    <div class="p-4 mb-3 bg-white">
+                        <h3 class="h5 text-black mb-3">Review Professor Approval</h3>
+                        <p>Review Student Academic Registration for This semester</p>
+                        <p><a class="btn btn-primary px-4 py-2 text-white">View Report</a></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="col-md-12 text-center">
+            <p>
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                All rights reserved <i class="icon-heart" aria-hidden="true"></i> by <a href="#" target="_blank">No One
+                Team</a>
+            </p>
+        </div>
+    </footer>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+<script>
+
+    var firebase = firebase.database();
+    var receivedData, tableData,keyData= [];
+    var studiedDict = [], failed = [], registered = [];//
+    // "Foundations of Information Systems", "Hand Drawing", "History of Computing";
+    // "Human Rights", "IT Fundamentals", "Interpersonal Communication", "Mathematics I"
+
+    //------------------------^^ Enable Get Courses ^^-------------------------//
+    function EnableDisable(fname) {
+        //Reference the Button.
+        var btnSubmit = document.getElementById("generate");
+
+        //Verify the TextBox value.
+        if (fname.value.trim() != "") {
+            //Enable the TextBox when TextBox has value.
+            btnSubmit.disabled = false;
+        } else {
+            //Disable the TextBox when TextBox is empty.
+            btnSubmit.disabled = true;
+        }
+    };
+
+    //------------------------ Dynamiclly Creating DropBox-------------------------//
+    function getStudentDataByID() {
+
+        var values = ["....", "registered", "Studied", "Failed"];
+        var stID = document.getElementById("fname").value;
+
+        var select = document.createElement("select");
+        select.name = "list";
+        select.id = "list"
+        for (const val of values) {
+            var option = document.createElement("option");
+            option.value = val;
+            option.id = val;
+            option.text = val;
+            select.appendChild(option);
+        }
+        var label = document.createElement("label");
+        label.innerHTML = "Choose Table To Edit : ";
+        label.htmlFor = "list";
+        document.getElementById("container").appendChild(label).appendChild(select);
+        console.log(stID);
+        console.log(registered);
+
+        select.onchange = function () {
+            alert("Which List!");
+            switch (this.value) {
+                case "registered":
+                    receivedData = registered;
+                    var leadsRef = firebase.ref('users/' + stID + '/registered_courses/');
+                    leadsRef.on('value', function (snapshot) {
+                        snapshot.forEach(function (childSnapshot) {
+
+                            var childData = childSnapshot.val();
+                            console.log(childData);
+                            receivedData.push(childData);
+                        });
+                    });
+                    alert("Registered");
+                    break;
+
+                case "Studied":
+                    receivedData = studiedDict;
+                    var leadsRef2 = firebase.ref('users/' + stID + '/studied_courses/');
+                    leadsRef2.on('value', function (snapshot) {
+                        snapshot.forEach(function (childSnapshot) {
+
+                            key = childSnapshot.key;
+                            childData = childSnapshot.val();
+
+                            keyData.push(key);
+                            receivedData.push(childData);
+                            //var key = Object.keys(snapshot.val())[0];
+                            console.log(receivedData);
+                        });
+                    });
+
+                    alert("studied");
+                    break;
+
+                case "Failed":
+                     receivedData = failed;
+                    var leadsRef_F = firebase.ref('users/' + stID + '/failed_courses/');
+                    leadsRef_F.on('value', function (snapshot_F) {
+                        snapshot_F.forEach(function (childSnapshot_F) {
+
+                            var childData_F = childSnapshot_F.val();
+                            console.log(childData_F);
+                            receivedData.push(childData_F);
+                        });
+                    });
+                    alert("Failed");
+                    break;
+
+            }
+
+        }
+
+
+    }
+
+
+    //-----------------------Generate Table-----------------------------------
+    function addRow() {
+
+        var Course = document.getElementById("course");
+        var GPA = document.getElementById("gpa");
+        var table = document.getElementById("myTableData");
+
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+
+        row.insertCell(0).innerHTML = '<input type="button" value = "Remove" class="btn btn-primary px-4 py-2 text-white" onClick="Javacsript:deleteRow(this)">';
+        row.insertCell(1).innerHTML = GPA.value;
+        row.insertCell(2).innerHTML = Course.value;
+
+
+    }
+
+    //-----------------------Generate Table-----------------------------------
+    function addRowFromdata() {
+        var dic = receivedData;
+        console.log(dic);
+        var myName = document.getElementById("name");
+        var age = document.getElementById("age");
+        var table = document.getElementById("myTableData");
+
+        var rowCount = table.rows.length;
+
+        var counter = 0;
+        for (var x in dic) {
+            var row = table.insertRow(counter + 1);
+            row.insertCell(0).innerHTML = '<input type="button" class="btn btn-primary px-4 py-2 text-white" value = "Remove" onClick="Javacsript:deleteRow(this)">';
+            row.insertCell(1).innerHTML = dic[x];
+            row.insertCell(2).innerHTML = keyData[x];
+            counter++;
+            tableData = table;
+        }
+
+    }
+
+    function deleteRow(obj) {
+
+        var index = obj.parentNode.parentNode.rowIndex;
+        var table = document.getElementById("myTableData");
+        console.log(index)
+        registered.splice(index - 1, 1)
+        table.deleteRow(index);
+        console.log(registered);
+
+    }
+
+    function load() {
+
+        console.log("Page load finished");
+
+    }
+
+    function submitCourses() {
+        alert(document.getElementById("myTableData").rows[2].cells.item(2).innerHTML);
+        alert(tableData);
+        var stID = document.getElementById("fname").value;
+
+        firebase.ref('users/').child(stID).update({
+            studied_courses: registered
+        });
+        alert("Cour ces submited");
+
+        {#firebase.ref('users/').child("userid").update({#}
+        {#     registered_courses:selectedCourses#}
+        {#  });#}
+        {#        studiedDict = firebase.ref('users/').child(stID).child('studied_courses').get().val();#}
+        {#        console.log(studied);#}
+        {#        failed = firebase.ref('users/').child(user_id).child('failed_courses').get().val();#}
+        {#        console.log(failed)#}
+        alert("Data Updated");
+
+    }
+</script>
+
+<script src="{% static 'bootstrap-4/js/contact_js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'bootstrap-4/js/contact_js/jquery-migrate-3.0.1.min.js' %}"></script>
+<script src="{% static 'bootstrap-4/js/contact_js/jquery-ui.js' %}"></script>
+<script src="{% static 'bootstrap-4/js/contact_js/popper.min.js' %}"></script>
+<script src="{% static 'bootstrap-4/js/contact_js/bootstrap.min.js' %}"></script>
+<script src="{% static 'bootstrap-4/js/contact_js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'bootstrap-4/js/contact_js/jquery.stellar.min.js' %}"></script>
+<script src="{% static 'bootstrap-4/js/contact_js/jquery.countdown.min.js' %}"></script>
+<script src="{% static 'bootstrap-4/js/contact_js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'bootstrap-4/js/contact_js/bootstrap-datepicker.min.js' %}"></script>
+<script src="{% static 'bootstrap-4/js/contact_js/aos.js' %}"></script>
+<script src="{% static 'bootstrap-4/js/contact_js/rangeslider.min.js' %}"></script>
+<script src="{% static 'bootstrap-4/js/contact_js/main.js' %}"></script>
+
+</body>
+</html>

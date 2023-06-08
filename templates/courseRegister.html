@@ -1,0 +1,263 @@
+{% load static %}
+{% if msg %}
+<script>
+     alert('{{ msg }}');
+</script>
+{% endif %}
+
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>ٍRegister Courses</title>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.1/css/all.css'>
+    <link rel='stylesheet' href='{% static 'css/SF2_styles.css' %}'>
+</head>
+
+<body>
+
+<form id="formPr" action="/mainstu/" method="post">
+    {% csrf_token %}
+    <!-- ------------This is the 1st Grade Courses-------------------------------- -->
+    <div class='container'>
+        <div class='wrapper'>
+            <div class='title'>
+                First Priority Courses
+            </div>
+            <br>
+            <div class='wrapper_inside'>
+
+
+                <div class='form'>
+
+                    <div class='group' id='0'>
+                        <input type='checkbox' id='1p'/>
+                        <label for='First Priority'>First Priority</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- -----------------This is the 2nd Grade Courses------------------------------ -->
+
+        <div class='wrapper'>
+            <div class='title'>
+                Second Priority Courses
+            </div>
+            <br>
+            <div class='wrapper_inside'>
+
+                <div class='form'>
+
+                    <div class='group' id='1'>
+                        <input type='checkbox' id='2p'/>
+                        <label for='Second Priority'>Second Priority</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ------------This is the 3rdt Grade Courses-------------------------------- -->
+
+        <div class='wrapper'>
+            <div class='title'>
+                Third Priority Courses
+            </div>
+            <br>
+            <div class='wrapper_inside'>
+
+
+                <div class='form'>
+
+                    <div class='group' id='2'>
+                        <input type='checkbox' id='1p'/>
+                        <label for='Third Priority'>Third Priority</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- -----------------This is the 4th Grade Courses------------------------------ -->
+
+        <div class='wrapper'>
+            <div class='title'>
+                Forth Priority Courses
+            </div>
+            <br>
+            <div class='wrapper_inside'>
+
+                <div class='form'>
+
+                    <div class='group' id='3'>
+                        <input type='checkbox' id='2p'/>
+                        <label for='Forth Priority'>Forth Priority</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+<div class="chk_center">
+    <div class="chkwrapper5">
+        <div class="chk">
+                <form >
+                        <input type="checkbox" id="agree" onclick="EnableDisable()">
+                        I Agree with the terms and condition that I have Submitted My Courses.
+
+                </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="btn_center">
+                <button
+                    id="generate" style="margin: 10px; background-color: white" class="wrapper5"
+                    type="submit"  value="generateFromID" disabled="disabled" onclick="submit();">
+                   Submit
+                </button>
+</div>
+
+{# <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->#}
+{#  <script src="/__/firebase/7.16.0/firebase-app.js"></script>#}
+{##}
+{#  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->#}
+{#  <script src="/__/firebase/7.16.0/firebase-analytics.js"></script>#}
+{##}
+{#  <!-- Add Firebase products that you want to use -->#}
+{#  <script src="/__/firebase/7.16.0/firebase-auth.js"></script>#}
+{#  <script src="/__/firebase/7.16.0/firebase-firestore.js"></script>#}
+{##}
+{# <script src="/__/firebase/init.js"></script>#}
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+{#<!-- The core Firebase JS SDK is always required and must be listed first -->#}
+{#<script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-app.js"></script>#}
+{##}
+{#<!-- TODO: Add SDKs for Firebase products that you want to use#}
+{#     https://firebase.google.com/docs/web/setup#available-libraries -->#}
+{#<script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-analytics.js"></script>#}
+
+<script>
+
+    var firebase = firebase.database();
+    // ---------------------------^^ Priority Form Generator ^^------------------------------------ //
+    var Psg = JSON.parse("{{ps|escapejs}}"); // Parsing student GPA from views to page
+    prtotal = 0;
+    var allcources = JSON.parse("{{data|escapejs}}"); // Parsing All available courses from views to page
+    var data = JSON.parse("{{Dict|escapejs}}"); // Parsing Courses Dictionary from database to page
+    var checkbox;
+    var selectedCourses;
+    var selecteCourses = [];
+
+    //------------------------^^ Enable Get Courses ^^-------------------------//
+    function EnableDisable() {
+        //Reference the Button.
+        var btnSubmit = document.getElementById("generate");
+        //Verify the TextBox value.
+        if (document.getElementById("agree").checked == true) {
+            //Enable the TextBox when TextBox has value.
+            btnSubmit.disabled = false;
+        } else {
+            //Disable the TextBox when TextBox is empty.
+            btnSubmit.disabled = true;
+        }
+    }
+
+    // ---------------------------^^ Dynamic Courses Loads ^^------------------------------------ //
+    for (j = 0; j < 4; j++) {
+        var app = document.getElementById(j);
+        app.innerHTML = '';
+        var subj = allcources[j];
+        for (i = 0; i < subj.length; i++) {
+            var item = document.createElement('div');
+            item.setAttribute('class', 'check_item');
+            chkbox = document.createElement('input');
+            // Assigning the attributes         // to created checkbox
+            chkbox.type = "checkbox";
+            chkbox.name = subj[i];
+            chkbox.value = subj[i];
+            chkbox.id = subj[i];
+            chkbox.setAttribute('class', 'chekboxPr');
+            // creating label for checkbox
+            var label = document.createElement('label');
+            // assigning attributes for         // the created label tag
+            label.htmlFor = "id";
+            // appending the created text to    // the created label tag
+            label.appendChild(document.createTextNode(subj[i]));
+            item.appendChild(chkbox);
+            item.appendChild(label);
+            app.append(item);
+            // assign function to onclick property of checkbox
+            chkbox.onclick = function () {
+                // access properties using this keyword
+                if (this.checked) {
+                   if(prtotal+parseInt(data[this.name]) <= 18 && Psg>2){
+                        selecteCourses.push(this.id);
+                        console.log(this.id);
+                        prtotal += parseInt(data[this.name]);
+                        console.log(prtotal);
+                        alert(this.value);
+                        console.log(selecteCourses)
+                   }else if (Psg<2 && prtotal+parseInt(data[this.name]) <= 12 )
+                   {    selecteCourses.push(this.id);
+                        console.log(this.id);
+                        prtotal += parseInt(data[this.name]);
+                        console.log(prtotal);
+                        alert(this.value);
+                        console.log(selecteCourses)}
+                   else {
+                       this.checked=false;
+                       alert("you have Reached your maximum credit hours to register");}
+                } else { console.log(this.id);
+                    prtotal -= parseInt(data[this.name]);
+                    console.log(prtotal);
+                    selecteCourses.splice(selecteCourses.indexOf(this.id), 1)
+                    console.log(selecteCourses)
+                }
+                selectedCourses = selecteCourses;
+            }
+        }
+    }
+    for (var x in data) {   // Comparing Courses With Database to register for Student
+        var credit = document.getElementById(x)
+        if (chkbox.checked == true) {
+            if (x == credit.toString()) {
+                prtotal += x[data];
+            }
+        }
+    }
+
+
+
+    function submit(){
+        console.log(selectedCourses )
+        if (selectedCourses.length != null){
+        firebase.ref('users/').child("{{ userid }}").update({
+             registered_courses:selectedCourses
+          });
+        alert("Courses Submitted Successful");
+            window.location.replace({% url 'mainstu' %});
+
+        }
+        else {
+        alert("You Need To Register data First!");
+        }
+    }
+
+
+</script>
+
+
+</html>

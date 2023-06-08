@@ -1,0 +1,120 @@
+{% load static %}
+{% if msg %}
+    <script>
+        alert('{{ msg }}');
+    </script>
+{% endif %}
+<!--loaded static files-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Form</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+
+    <link rel="stylesheet" href="{% static 'css/regstyles.css' %}">
+
+</head>
+<body>
+{% csrf_token %}
+<div class="wrapper">
+    <div class="title">
+        Add New user info
+    </div>
+    <div class="social_media">
+        <div class="item">
+            <i class="fab fa-facebook-f"></i>
+        </div>
+        <div class="item">
+            <i class="fab fa-twitter"></i>
+        </div>
+        <div class="item">
+            <i class="fab fa-google-plus-g"></i>
+        </div>
+    </div>
+    <form action="/post_add/" method="post">
+        {% csrf_token %}
+        <div class="form">
+            <div class="input_field">
+                <input type="text" placeholder="user name" name="uname" class="input">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="form">
+                <div class="input_field">
+                    <input type="number" placeholder="id" name="userid" class="input">
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div class="input_field">
+                    <input type="email" placeholder="email" name="uemail" class="input"><br><br>
+                    <i class="far fa-envelope"></i>
+                </div>
+                <div class="input_field">
+                    <input type="password" placeholder="Password" class="input" name="upass">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="form">
+                    <div class="input_field">
+                        <input type="number" placeholder="phone" name="phone" class="input">
+
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="input_field">
+                        <input type="text" placeholder="department" name="depart" class="input">
+
+                        <i class="fas fa-user"></i>
+                    </div>
+
+                    <div class="input_field">
+                        <input type="text" placeholder="address" name="address" class="input"><br><br>
+                        <i class="far fa-envelope"></i>
+                    </div>
+
+                    <div class="btn">
+                        <input class="btn" type="submit"  value="register">
+                    </div>
+                </div>
+            </div>
+            </div>
+    </form>
+</div>
+
+
+</body>
+{#<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>#}
+{#<script>#}
+{##}
+{#    var firebaseConfig2 = {#}
+{#    'apiKey': "AIzaSyBdAGklSfW5-AQmGJTpVsJJSfnzHjuvb00",#}
+{#    'authDomain': "aaas-a442a.firebaseapp.com",#}
+{#    'databaseURL': "https://aaas-a442a.firebaseio.com",#}
+{#    'projectId': "aaas-a442a",#}
+{#    'messagingSenderId': "163237067783",#}
+{#        'storageBucket': "gs://aaas-a442a.appspot.com",#}
+{##}
+{#    };#}
+{#       firebase.initializeApp(firebaseConfig2);#}
+{#  // Get a reference to the storage service, which is used to create references in your storage bucket#}
+{#  function uploadimage(){#}
+{#      let storage = firebase.storage();#}
+{#      let file = document.getElementById("files").files[0];#}
+{#      let storageRef = storage.ref();#}
+{#      let thisref = storageRef.child('profile/').child(file.name).put(file);#}
+{#      thisref.on('state_changed',function(snapshot){#}
+{#      console.log("file uplaoded succesfully");#}
+{#  },#}
+{#  function(error) {#}
+{#  },#}
+{#function(){#}
+{#    let downloadURL = thisref.snapshot.ref.getDownloadURL().then(function (downloadURL) {#}
+{#        console.log('File available at', downloadURL);#}
+{#        document.getElementById("url").value = downloadURL;#}
+{#        alert("file uploaded successfully");#}
+{#    });#}
+{#    });#}
+{##}
+{##}
+{#  }#}
+{#</script>#}
+</html>
